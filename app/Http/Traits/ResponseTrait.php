@@ -29,9 +29,9 @@ trait ResponseTrait
     /**
      * purpose Response
      * @param array $data
-     * @param string $message
+     * @param boolean $success
+     * @param boolean $error
      * @param int $code
-     * @param string $langCode
      * @author Brainvire Inc. <https://www.brainvire.com/>
      * @return string \Illuminate\Http\Response
      */
@@ -49,7 +49,7 @@ trait ResponseTrait
      * purpose Response - Server side validation error message
      * @param object $validation
      * @param string $message
-     * @param string $code
+     * @param int $code
      * @author Brainvire Inc. <https://www.brainvire.com/>
      * @return string \Illuminate\Http\Response
      */
