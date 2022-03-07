@@ -63,7 +63,7 @@ class TranslateControllerTest extends TestCase
     }
 
     /**
-     * Tests that the translate method returns success
+     * Tests that the translate method validation error
      *
      * @return void
      */
@@ -77,7 +77,7 @@ class TranslateControllerTest extends TestCase
     }
 
     /**
-     * Tests that the translate method returns success
+     * Tests that the translate stringTranslate method throws an exception
      *
      * @return void
      */
