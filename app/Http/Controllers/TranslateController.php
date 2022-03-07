@@ -18,6 +18,7 @@ use App\Http\Services\TranslationService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Traits\ResponseTrait;
 use Validator;
+use Exception;
 
 /**
  * Class TranslateController
@@ -57,9 +58,6 @@ class TranslateController extends Controller
             return $this->validationError($validation);
         }
         $serviceType = 'Google';
-        if (!empty($request->get('service_type'))){
-            $serviceType = $request->get('service_type');
-        }
         $content = $request->get('content');
         $sourceLang = $request->get('source');
         $targetLang = $request->get('target');

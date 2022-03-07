@@ -4,6 +4,7 @@ namespace App\Http\Services\Translations;
 
 use App\Http\TranslateInterface\StringTranslateInterface;
 use App\Http\Traits\CurlTrait;
+use Exception;
 
 /**
  * @category Service
@@ -34,11 +35,10 @@ class GoogleService implements StringTranslateInterface
             ];
             $url = env('GOOGLE_TRANSLATE_URL').'?key='.env('GOOGLE_TRANSLATE_KEY');
             $result = $this->sendHttpPostUsinGuzzel($url, $requestData);
-            $response = ['success' => false, 'error' => true, 'message' => ''];
+            $messages = isset($result['error']['message']) ? $result['error']['message'] : '';
+            $response = ['success' => false, 'error' => true, 'message' => $messages];
             if (isset($result['data']['translations'])) {
                 $response = ['success' => true, 'error' => false, 'message' => $result['data']['translations'][0]['translatedText']];
-            } else {
-                $response['message'] = $result['error']['message'];
             }
             return $response;
         } catch (Exception $exception) {

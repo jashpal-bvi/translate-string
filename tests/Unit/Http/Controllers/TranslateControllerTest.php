@@ -16,6 +16,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\Services\TranslationService;
 use Mockery;
+use Exception;
 
 /**
  * Class TranslateControllerTest
@@ -59,5 +60,33 @@ class TranslateControllerTest extends TestCase
         $data = ['content' => 'dog','source' => 'en','target' => 'es'];
         $response = $this->postJson('/api/translate', $data);
         $response->assertStatus(200);
+    }
+
+    /**
+     * Tests that the translate method returns success
+     *
+     * @return void
+     */
+    public function testStringTranslateWithValidationError(): void
+    {
+        $response = ['success' => false, 'error' => true, 'message' => ''];
+        $this->mockTranslationService->shouldReceive('stringTranslate')->times(0);
+        $data = ['content' => 'dog','source' => 'en','target' => ''];
+        $response = $this->postJson('/api/translate', $data);
+        $response->assertStatus(422);
+    }
+
+    /**
+     * Tests that the translate method returns success
+     *
+     * @return void
+     */
+    public function testStringTranslateWithException(): void
+    {
+        $response = ['success' => false, 'error' => true, 'message' => ''];
+        $this->mockTranslationService->shouldReceive('stringTranslate')->andThrow(Exception::class);
+        $data = ['content' => 'dog','source' => 'en','target' => 'es'];
+        $response = $this->postJson('/api/translate', $data);
+        $response->assertStatus(500);
     }
 }

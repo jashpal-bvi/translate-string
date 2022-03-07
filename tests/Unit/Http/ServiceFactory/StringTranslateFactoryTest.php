@@ -15,6 +15,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\ServiceFactory\StringTranslateFactory;
 use App\Http\TranslateInterface\StringTranslateInterface;
+use Exception;
 
 /**
  * Class StringTranslateFactoryTest
@@ -57,5 +58,17 @@ class StringTranslateFactoryTest extends TestCase
         $result = $this->factory->makeInstance($this->service);
         $this->assertInstanceOf(StringTranslateInterface::class, $result);
         $this->assertTrue(true);
+    }
+
+    /**
+     * Test if makeinstance method return exception
+     * @return void
+     * @throws Exception
+     */
+    public function testMakeInstanceException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('No translate service found.');
+        $this->factory->makeInstance('test');
     }
 }
